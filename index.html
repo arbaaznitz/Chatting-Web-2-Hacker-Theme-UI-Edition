@@ -1,0 +1,685 @@
+hacker theme but better again one more best ui for chat web 1
+
+//Chatting web 1 with lock complete code 
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SECURE_TERMINAL::v2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-green: #0f0;
+            --dark-bg: #000000;
+            --terminal-green: #00ff00;
+            --cyber-blue: #0ff;
+            --dark-gray: #1a1a1a;
+            --error-red: #ff0033;
+            --warning-yellow: #ffcc00;
+            --success-green: #00ff99;
+        }
+        
+        body { 
+            background-color: var(--dark-bg);
+            color: var(--terminal-green);
+            font-family: 'Share Tech Mono', monospace;
+            margin: 0;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(0,0,0,0.97), rgba(0,0,0,0.9)),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 255, 0, 0.05) 2px,
+                    rgba(0, 255, 0, 0.05) 4px
+                );
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+            opacity: 0.07;
+        }
+
+        h2 {
+            color: var(--cyber-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px var(--cyber-blue);
+            margin: 30px 0;
+            text-align: center;
+            font-size: 1.5em;
+            position: relative;
+            padding: 10px 0;
+        }
+
+        h2::before, h2::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(
+                to right,
+                transparent,
+                var(--cyber-blue),
+                transparent
+            );
+        }
+
+        h2::after {
+            top: auto;
+            bottom: 0;
+        }
+
+        .input-container {
+            background: rgba(0, 20, 0, 0.8);
+            padding: 30px;
+            border: 1px solid var(--terminal-green);
+            box-shadow: 
+                0 0 20px rgba(0, 255, 0, 0.2),
+                inset 0 0 20px rgba(0, 255, 0, 0.1);
+            max-width: 400px;
+            margin: 100px auto;
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .input-container::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, 
+                var(--terminal-green), 
+                var(--cyber-blue), 
+                var(--terminal-green), 
+                var(--cyber-blue));
+            z-index: -1;
+            animation: borderGlow 3s linear infinite;
+        }
+
+        @keyframes borderGlow {
+            0% { opacity: 0.5; }
+            50% { opacity: 0.8; }
+            100% { opacity: 0.5; }
+        }
+
+        input, textarea {
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid var(--terminal-green);
+            color: var(--terminal-green);
+            font-family: 'Share Tech Mono', monospace;
+            padding: 12px;
+            margin: 10px 0;
+            width: 100%;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            position: relative;
+            resize: vertical;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: rgba(0, 255, 0, 0.5);
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 
+                0 0 15px var(--terminal-green),
+                inset 0 0 5px var(--terminal-green);
+            border-color: var(--cyber-blue);
+        }
+
+        button {
+            background: transparent;
+            color: var(--terminal-green);
+            border: 1px solid var(--terminal-green);
+            padding: 12px 25px;
+            font-family: 'Share Tech Mono', monospace;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(0, 255, 0, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:hover {
+            background: rgba(0, 255, 0, 0.1);
+            color: var(--cyber-blue);
+            box-shadow: 
+                0 0 20px var(--terminal-green),
+                inset 0 0 10px var(--terminal-green);
+            text-shadow: 0 0 5px var(--cyber-blue);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        #content {
+            background: rgba(0, 20, 0, 0.8);
+            border: 1px solid var(--terminal-green);
+            padding: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+            height: 400px;
+            overflow-y: auto;
+            box-shadow: 
+                inset 0 0 20px rgba(0, 255, 0, 0.2),
+                0 0 15px rgba(0, 255, 0, 0.1);
+            position: relative;
+            backdrop-filter: blur(5px);
+        }
+
+        .entry {
+            border: 1px solid rgba(0, 255, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 10px;
+            position: relative;
+            transition: all 0.3s ease;
+            background: rgba(0, 20, 0, 0.5);
+        }
+
+        .entry::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--cyber-blue);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .entry:hover {
+            background: rgba(0, 255, 0, 0.05);
+            border-color: var(--cyber-blue);
+        }
+
+        .entry:hover::before {
+            opacity: 1;
+        }
+
+        .username {
+            color: var(--cyber-blue);
+            font-weight: bold;
+            text-shadow: 0 0 5px var(--cyber-blue);
+            display: inline-block;
+            padding: 2px 5px;
+            background: rgba(0, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .message {
+            color: var(--terminal-green);
+            margin: 10px 0;
+            line-height: 1.4;
+            position: relative;
+        }
+
+        .message pre {
+            color: var(--terminal-green);
+            background: rgba(0, 20, 0, 0.3);
+            padding: 15px;
+            border-radius: 4px;
+            border-left: 3px solid var(--cyber-blue);
+            margin: 10px 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .message pre::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(
+                    rgba(0, 255, 0, 0.05) 50%,
+                    transparent 50%
+                );
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        .timestamp {
+            color: rgba(0, 255, 0, 0.5);
+            font-size: 0.8em;
+            padding: 2px 5px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 2px;
+            float: right;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 20, 0, 0.8);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--terminal-green);
+            border-radius: 4px;
+            border: 1px solid var(--cyber-blue);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--cyber-blue);
+        }
+
+        .terminal-text {
+            color: var(--terminal-green);
+            font-size: 14px;
+            margin: 5px 0;
+            font-family: 'Share Tech Mono', monospace;
+            position: relative;
+            padding-left: 20px;
+        }
+
+        .terminal-text::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--cyber-blue);
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        #btnContainer {
+            position: relative;
+            padding: 20px;
+            background: rgba(0, 20, 0, 0.4);
+            border: 1px solid var(--terminal-green);
+            margin: 20px auto;
+            max-width: 800px;
+            backdrop-filter: blur(5px);
+        }
+
+        .number {
+            color: var(--warning-yellow);
+            font-weight: bold;
+            margin-right: 10px;
+            opacity: 0.8;
+        }
+
+        /* Status indicators */
+        .status-line {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 20, 0, 0.9);
+            padding: 5px 20px;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+            border-top: 1px solid var(--terminal-green);
+        }
+
+        .status-item {
+            display: inline-block;
+            margin-right: 20px;
+            padding: 2px 8px;
+            background: rgba(0, 255, 0, 0.1);
+            border-radius: 2px;
+        }
+
+        /* Loading animation */
+        #content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(to right, 
+                transparent,
+                var(--cyber-blue),
+                var(--terminal-green),
+                var(--cyber-blue),
+                transparent
+            );
+            animation: loading 2s infinite;
+        }
+
+        @keyframes loading {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 600px) {
+            body { padding: 10px; }
+            .input-container { 
+                padding: 15px;
+                margin: 50px auto;
+            }
+            #content { height: 300px; }
+            h2 { font-size: 1.2em; }
+            .status-line { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-bg" class="matrix-bg"></canvas>
+
+    <!-- Lock Screen -->
+    <div class="input-container">
+        <h2>SECURE_TERMINAL::v2.0</h2>
+        <div class="terminal-text">Authentication required</div>
+        <input type="password" id="password" placeholder="Enter access key" autofocus>
+        <button class="unlock-btn" onclick="unlockLinks()">INITIALIZE_SESSION</button>
+    </div>
+
+    <!-- Main Content (Initially Hidden) -->
+    <div id="btnContainer" style="display: none;">
+        <h2>ENCRYPTED_CHANNEL::ACTIVE</h2>
+        <div class="terminal-text">User_identification</div>
+        <input id="username" type="text" placeholder="Enter handle">
+        
+        <div class="terminal-text">Message_input</div>
+        <textarea id="userInput" placeholder="Compose transmission..." rows="4"></textarea>
+        
+        <button id="sendButton" onclick="saveText()">TRANSMIT_DATA</button>
+
+        <h2>TRANSMISSION_LOG</h2>
+        <div id="content">Establishing secure connection...</div>
+    </div>
+
+    <div class="status-line">
+        <span class="status-item">STATUS: ACTIVE</span>
+        <span class="status-item">ENCRYPTION: ENABLED</span>
+        <span class="status-item">CHANNEL: SECURE</span>
+        <span class="status-item" id="connection-status">CONNECTION: STABLE</span>
+    </div>
+
+    <script>
+        // Matrix background effect
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const katakana = 'アァカサタナハマヤャラワガザダバパイィキシチニヒミリヰギジヂビピウゥクスツヌフムユュルグズブヅプエェケセテネヘメレヱゲゼデベペオォコソトノホモヨョロヲゴゾドボポヴッン';
+        const latin = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const nums = '0123456789';
+        const alphabet = katakana + latin + nums;
+
+        const fontSize = 16;
+        const columns = canvas.width/fontSize;
+
+        const rainDrops = Array(Math.floor(columns)).fill(1);
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for(let i = 0; i < rainDrops.length; i++) {
+                const text = alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+                ctx.fillText(text, i*fontSize, rainDrops[i]*fontSize);
+                
+                if(rainDrops[i]*fontSize > canvas.height && Math.random() > 0.975) {
+                    rainDrops[i] = 0;
+                }
+                rainDrops[i]++;
+            }
+        }
+
+        setInterval(draw, 30);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Remove the heart creation functions
+        function unlockLinks() {
+            const encodedPassword = "MTIyMA=="; // Base64 encoded password
+            const passwordInput = document.getElementById("password");
+            const enteredPassword = passwordInput.value;
+
+            if (btoa(enteredPassword) === encodedPassword) {
+                sessionStorage.setItem("accessGranted", "true");
+                document.querySelector(".input-container").style.display = "none"; 
+                document.getElementById("btnContainer").style.display = "block";
+
+            } else {
+                alert("Incorrect password! Access denied.");
+                passwordInput.value = ""; // Clear the input field
+                passwordInput.focus(); // Re-focus on the password box
+            }
+        }
+
+        // Unlock using Enter key
+        document.getElementById("password").addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                unlockLinks();
+            }
+        });
+
+        // Ensure password is required after every refresh
+        window.onload = function() {
+            sessionStorage.removeItem("accessGranted"); // Remove stored access
+            document.getElementById("btnContainer").style.display = "none";
+            document.getElementById("password").focus();
+        };
+
+        const scriptURL = "https://script.google.com/macros/s/AKfycbwOTsEZYVOGLI208AwrXf5eHHDVRYfl6iPl3RnJG_zjDgulWup1Am_kEpuFdU01WFFR/exec"; 
+
+        // Add sanitization function to escape HTML
+        function escapeHtml(unsafe) {
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        function saveText() {
+            let username = escapeHtml(document.getElementById("username").value.trim() || "ChattingWeb");
+            // Don't trim the message text to preserve spacing
+            let text = escapeHtml(document.getElementById("userInput").value);
+            let sendButton = document.getElementById("sendButton");
+
+            if (text.length === 0) {
+                alert("Please enter a message before sending.");
+                return;
+            }
+
+            sendButton.disabled = true;
+            sendButton.textContent = "Sending...";
+
+            let now = new Date();
+            let formattedTime = now.getHours().toString().padStart(2, '0') + ":" +
+                               now.getMinutes().toString().padStart(2, '0') + " | " +
+                               now.getDate().toString().padStart(2, '0') + "/" +
+                               (now.getMonth() + 1).toString().padStart(2, '0') + "/" +
+                               now.getFullYear();
+
+            // Store newlines as a special character sequence that won't appear in normal text
+            let finalMessage = username + "||" + text.replace(/\n/g, "{{newline}}") + "||" + formattedTime; 
+
+            fetch(scriptURL, {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: "text=" + encodeURIComponent(finalMessage)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.message);
+                document.getElementById("userInput").value = "";
+                sendButton.disabled = false;
+                sendButton.textContent = "Send Message";
+                loadContent();
+            })
+            .catch(error => {
+                alert("Error sending message!");
+                sendButton.disabled = false;
+                sendButton.textContent = "Send Message";
+            });
+        }
+
+        function loadContent() {
+            fetch(scriptURL)
+            .then(response => response.json())
+            .then(data => {
+                let contentDiv = document.getElementById("content");
+                let lines = data.content.split("\n").filter(line => line.trim() !== "");
+                contentDiv.innerHTML = ""; 
+
+                lines.reverse().forEach((line, index) => {
+                    let parts = line.split("||");
+                    if (parts.length < 3) return;
+
+                    // Create elements instead of using innerHTML for better security
+                    let entryDiv = document.createElement("div");
+                    entryDiv.className = "entry";
+
+                    let numberSpan = document.createElement("span");
+                    numberSpan.className = "number";
+                    numberSpan.textContent = `${lines.length - index}. `;
+
+                    let usernameSpan = document.createElement("span");
+                    usernameSpan.className = "username";
+                    usernameSpan.textContent = parts[0].trim();
+
+                    let messageDiv = document.createElement("div");
+                    messageDiv.className = "message";
+                    
+                    // Create a pre element to preserve formatting
+                    let preElement = document.createElement("pre");
+                    preElement.style.margin = "0";
+                    preElement.style.fontFamily = "inherit";
+                    preElement.style.whiteSpace = "pre-wrap";
+                    preElement.style.wordWrap = "break-word";
+                    
+                    // Replace the special newline sequence and preserve spaces
+                    preElement.textContent = parts[1].replace(/{{newline}}/g, "\n");
+                    messageDiv.appendChild(preElement);
+
+                    let timestampSpan = document.createElement("span");
+                    timestampSpan.className = "timestamp";
+                    timestampSpan.textContent = parts[2].trim();
+
+                    // Append elements
+                    entryDiv.appendChild(numberSpan);
+                    entryDiv.appendChild(usernameSpan);
+                    entryDiv.appendChild(document.createElement("br"));
+                    entryDiv.appendChild(messageDiv);
+                    entryDiv.appendChild(document.createElement("br"));
+                    entryDiv.appendChild(timestampSpan);
+
+                    contentDiv.appendChild(entryDiv);
+                });
+            });
+        }
+
+        document.getElementById("userInput").addEventListener("keydown", function(event) {
+            if (event.key === "Enter" && event.shiftKey) {
+                event.preventDefault();
+                saveText();
+            }
+        });
+
+        loadContent();
+        setInterval(loadContent, 5000);
+        
+        // Disable Right Click
+        document.addEventListener("contextmenu", function (event) {
+            event.preventDefault();
+        });
+
+        // Disable Specific Key Combinations
+        document.addEventListener("keydown", function (event) {
+            if (
+                event.key === "F12" || 
+                (event.ctrlKey && event.shiftKey && (event.key === "I" || event.key === "J")) || 
+                (event.ctrlKey && event.key === "U")
+            ) {
+                event.preventDefault();
+            }
+        });
+
+        // Prevent Developer Tools via Debugger
+        (function() {
+            function detectDevTools() {
+                debugger;
+            }
+            setInterval(detectDevTools, 100);
+        })();
+
+        // Update textarea to preserve formatting
+        const textarea = document.getElementById("userInput");
+        textarea.style.whiteSpace = "pre-wrap";
+        textarea.style.wordWrap = "break-word";
+    </script>
+
+</body>
+</html>
+

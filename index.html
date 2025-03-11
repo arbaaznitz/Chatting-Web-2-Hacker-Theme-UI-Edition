@@ -405,14 +405,124 @@
 
         /* Responsive Design */
         @media (max-width: 600px) {
-            body { padding: 10px; }
+            body { 
+                padding: 10px; 
+                width: 100%;
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+            
             .input-container { 
                 padding: 15px;
-                margin: 50px auto;
+                margin: 20px auto;
+                width: 90%;
+                max-width: none;
             }
-            #content { height: 300px; }
-            h2 { font-size: 1.2em; }
-            .status-line { display: none; }
+            
+            #content { 
+                height: 70vh;
+                width: 90%;
+                margin: 10px auto;
+                padding: 10px;
+            }
+            
+            #btnContainer {
+                width: 90%;
+                padding: 10px;
+                margin: 10px auto;
+            }
+            
+            h2 { 
+                font-size: 1.2em;
+                padding: 5px 0;
+            }
+            
+            .status-line { 
+                padding: 5px;
+                font-size: 10px;
+            }
+            
+            .status-item {
+                margin-right: 5px;
+                padding: 2px 4px;
+            }
+            
+            input, textarea {
+                width: 100%;
+                padding: 8px;
+                font-size: 14px;
+            }
+            
+            button {
+                width: 100%;
+                padding: 10px;
+                margin: 5px 0;
+            }
+            
+            .entry {
+                padding: 10px;
+                margin-bottom: 8px;
+            }
+            
+            .message pre {
+                padding: 8px;
+                font-size: 13px;
+            }
+            
+            .username {
+                font-size: 14px;
+            }
+            
+            .timestamp {
+                font-size: 11px;
+            }
+        }
+
+        /* Tablet Responsive Design */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            body {
+                padding: 15px;
+            }
+            
+            .input-container {
+                max-width: 600px;
+                margin: 40px auto;
+            }
+            
+            #content {
+                width: 95%;
+                max-width: 800px;
+                height: 60vh;
+            }
+            
+            #btnContainer {
+                width: 95%;
+                max-width: 800px;
+            }
+        }
+
+        /* Ensure proper viewport scaling */
+        @viewport {
+            width: device-width;
+            zoom: 1.0;
+        }
+
+        /* Fix for iOS devices */
+        @supports (-webkit-overflow-scrolling: touch) {
+            body {
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            #content {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+
+        /* High DPI screens */
+        @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+            input, button, textarea {
+                font-size: 16px; /* Prevent zoom on focus in iOS */
+            }
         }
     </style>
 </head>
@@ -677,4 +787,3 @@
 
 </body>
 </html>
-
